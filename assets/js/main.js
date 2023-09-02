@@ -2,19 +2,15 @@ const taskName = document.querySelector(".input-task");
 const btnAdd = document.querySelector(".btn-addTask");
 const tasksContainer = document.querySelector(".tasks-container");
 
-function getList() {
+(function getList() {
   const taskList = localStorage.getItem("tasks");
   const taskArray = JSON.parse(taskList);
-
-  console.log(taskArray);
 
   taskArray.map((task) => {
     const taskMaked = createTask(task.taskName, task.status);
     tasksContainer.appendChild(taskMaked);
   });
-}
-
-getList();
+})();
 
 function saveList() {
   let listaArray = [];
