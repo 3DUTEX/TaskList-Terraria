@@ -3,13 +3,17 @@ const btnAdd = document.querySelector(".btn-addTask");
 const tasksContainer = document.querySelector(".tasks-container");
 
 (function getList() {
-  const taskList = localStorage.getItem("tasks");
-  const taskArray = JSON.parse(taskList);
+  try {
+    const taskList = localStorage.getItem("tasks");
+    const taskArray = JSON.parse(taskList);
 
-  taskArray.map((task) => {
-    const taskMaked = createTask(task.taskName, task.status);
-    tasksContainer.appendChild(taskMaked);
-  });
+    taskArray.map((task) => {
+      const taskMaked = createTask(task.taskName, task.status);
+      tasksContainer.appendChild(taskMaked);
+    });
+  } catch (e) {
+    console.log("Primeira vez executando");
+  }
 })();
 
 function saveList() {
