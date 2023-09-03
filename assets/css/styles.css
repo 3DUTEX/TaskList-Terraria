@@ -77,8 +77,7 @@ body {
   height: 80vh;
   padding: 10px;
   border-radius: 10px;
-  overflow: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .task-item {
