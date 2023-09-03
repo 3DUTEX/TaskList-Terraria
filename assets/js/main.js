@@ -2,6 +2,7 @@ const taskName = document.querySelector(".input-task");
 const btnAdd = document.querySelector(".btn-addTask");
 const tasksContainer = document.querySelector(".tasks-container");
 
+//Função IIFE
 (function getList() {
   try {
     const taskList = localStorage.getItem("tasks");
@@ -14,6 +15,8 @@ const tasksContainer = document.querySelector(".tasks-container");
   } catch (e) {
     console.log("Primeira vez executando");
   }
+
+  organizationList();
 })();
 
 function saveList() {
@@ -63,6 +66,7 @@ function createTask(nome, status = false) {
     } else {
       li.classList.replace("concluido", "pendente");
     }
+    organizationList();
     saveList();
   });
 
@@ -75,4 +79,33 @@ btnAdd.addEventListener("click", () => {
 
   taskName.value = "";
   saveList();
+  organizationList();
 });
+
+function organizationList() {
+  let taskList = tasksContainer.querySelectorAll("li");
+  let newTaskList = [];
+
+  for (task of taskList) {
+    let status = false;
+    if (task.classList.contains("concluido")) {
+      status = true;
+    }
+    const taskObj = {
+      taskName: task.innerText,
+      status: status,
+    };
+
+    if (task.classList.contains("pendente")) {
+      newTaskList.unshift(taskObj);
+    } else {
+      newTaskList.push(taskObj);
+    }
+  }
+
+  tasksContainer.innerHTML = "";
+  for (task of newTaskList) {
+    const taskMaked = createTask(task.taskName, task.status);
+    tasksContainer.appendChild(taskMaked);
+  }
+}
